@@ -1,0 +1,9 @@
+/dist
+/node_modules
+/.sonarlint
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/launch.json
+!.vscode/extensions.json
