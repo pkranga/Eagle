@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-LexCoreApplication<bodhi>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+substitute url based on requirement
+            "projectName": "bodhi",
+            "args": ""
+        }
+    ]
+}
