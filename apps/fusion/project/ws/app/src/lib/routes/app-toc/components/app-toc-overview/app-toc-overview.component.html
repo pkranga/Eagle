@@ -1,0 +1,132 @@
+<!--               "Copyright 2020 Infosys Ltd.
+               Use of this source code is governed by GPL v3 license that can be found in the LICENSE file or at https://opensource.org/licenses/GPL-3.0
+               This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3" -->
+<div class="flex flex-between flex-wrapped mt-4">
+  <div class="meta-section">
+    <!-- Description : Conditional : If not shown here, will be shown over banner -->
+    <mat-card *ngIf="showDescription && showSubtitleOnBanner && content?.description" class="unit-meta-item">
+      <h2 i18n>Description</h2>
+      <mat-card-content>
+        <div class="mat-subheading-1" [innerHTML]="content?.description"></div>
+      </mat-card-content>
+    </mat-card>
+    <!-- Content Body -->
+    <mat-card *ngIf="content?.body" class="unit-meta-item">
+      <h2 i18n>Details</h2>
+      <mat-card-content>
+        <div class="break-words" [innerHTML]="body"></div>
+      </mat-card-content>
+    </mat-card>
+    <!-- Learning objective -->
+    <mat-card *ngIf="content?.learningObjective" class="unit-meta-item">
+      <h2 i18n>What you will learn</h2>
+      <mat-card-content>
+        <p class="mat-subheading-1" [innerHTML]="content?.learningObjective"></p>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Registration instructions -->
+    <mat-card *ngIf="content?.registrationInstructions" class="unit-meta-item">
+      <h2 i18n>Instructions</h2>
+      <mat-card-content>
+        <div class="mat-subheading-1 break-words" [innerHTML]="content?.registrationInstructions"></div>
+      </mat-card-content>
+    </mat-card>
+    <!-- Skills -->
+    <mat-card *ngIf="content?.skills?.length" class="unit-meta-item mat-app-background">
+      <h2 i18n>Skills you will gain</h2>
+      <mat-chip-list>
+        <mat-chip *ngFor="let skill of content?.skills">{{ skill.name }}</mat-chip>
+      </mat-chip-list>
+    </mat-card>
+    <!-- Requirements -->
+    <mat-card *ngIf="content?.preRequisites" class="unit-meta-item">
+      <h2 i18n>Prerequisites</h2>
+      <mat-card-content>
+        <div class="mat-subheading-1" [innerHTML]="content?.preRequisites"></div>
+        <div class="margin-top-s" *ngIf="content?.softwareRequirements?.length">
+          <h3 class="mat-h3 margin-bottom-xs" i18n>Software Requirements</h3>
+          <ng-container *ngFor="let requirement of content?.softwareRequirements">
+            <a *ngIf="requirement.url" class="margin-right-s" mat-stroked-button target="_blank"
+              [href]="requirement.url">
+              {{ requirement.title }}
+            </a>
+            <a mat-stroked-button class="margin-right-s" *ngIf="!requirement?.url">{{ requirement.title }}
+            </a>
+          </ng-container>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Training (LHub) -->
+    <mat-card *ngIf="trainingLHubEnabled && trainingLHubCount$ | async as trainingLHubCount" class="unit-meta-item">
+      <h2 i18n>Trainings</h2>
+      <h4 class="mat-h4">
+        <ng-container>{{ trainingLHubCount }}</ng-container>
+        <ng-container i18n="x trainings available" *ngIf="trainingLHubCount > 1">
+          trainings available</ng-container>
+        <ng-container i18n="1 training available" *ngIf="trainingLHubCount === 1">
+          training available</ng-container>
+      </h4>
+      <div>
+        <a mat-flat-button [color]="'primary'" [routerLink]="['/app/infy/training/', content?.identifier]" i18n>View
+          Trainings
+        </a>
+      </div>
+    </mat-card>
+
+    <!-- Related Topics -->
+    <mat-card class="unit-meta-item" *ngIf="content?.topics?.length">
+      <h2 i18n>Related Topics</h2>
+      <mat-card-content>
+        <div class="flex flex-between flex-wrapped">
+          <a mat-stroked-button class="topic-button text-truncate"
+            *ngFor="let topic of content?.topics | pipeLimitTo: (viewMoreRelatedTopics ? 24 : 6)" [title]="topic?.name"
+            [routerLink]="'/app/concept-graph/' + topic.identifier">
+            {{ topic?.name }}
+          </a>
+        </div>
+        <div *ngIf="content?.topics?.length > 6" class="text-right margin-top-xs">
+          <a mat-button (click)="viewMoreRelatedTopics = !viewMoreRelatedTopics">
+            <span *ngIf="!viewMoreRelatedTopics" i18n>View More</span>
+            <span *ngIf="viewMoreRelatedTopics" i18n>View Less</span>
+          </a>
+        </div>
+      </mat-card-content>
+    </mat-card>
+    <!-- Authors on small screen -->
+    <div class="block sm:hidden margin-bottom-m" *ngIf="content?.creatorDetails?.length">
+      <ng-container [ngTemplateOutlet]="creators" [ngTemplateOutletContext]="{
+          authors: content?.creatorDetails,
+          title: 'AUTHOR'
+        }">
+      </ng-container>
+    </div>
+    <!-- Contacts on small screen -->
+    <div class="block sm:hidden margin-bottom-m" *ngIf="content?.creatorContacts?.length">
+      <ng-container [ngTemplateOutlet]="creators" [ngTemplateOutletContext]="{
+          authors: content?.creatorContacts,
+          title: 'CONTACT'
+        }">
+      </ng-container>
+    </div>
+  </div>
+  <!-- At a glance section -->
+  <div class="info-section">
+    <ws-widget-player-brief [content]="content" [hasTocStructure]="hasTocStructure" [tocStructure]="tocStructure">
+    </ws-widget-player-brief>
+  </div>
+</div>
+
+
+<ng-template #creators let-authors="authors" let-title="title">
+  <div *ngFor="let author of authors" class="author">
+    <ws-widget-user-image class="author-image" [imageType]="'name-initial'" [userName]="author.name || ''"
+      [email]="author.email"></ws-widget-user-image>
+    <div class="width-expand flex flex-middle flex-between">
+      <p class="margin-remove text-md font-normal">{{ author.name }}</p>
+      <ws-widget-btn-mail-user *ngIf="askAuthorEnabled" [widgetData]="{ content: content, emails: [author.email] }">
+      </ws-widget-btn-mail-user>
+    </div>
+  </div>
+</ng-template>

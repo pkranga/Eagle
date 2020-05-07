@@ -1,0 +1,21 @@
+<!--               "Copyright 2020 Infosys Ltd.
+               Use of this source code is governed by GPL v3 license that can be found in the LICENSE file or at https://opensource.org/licenses/GPL-3.0
+               This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3" -->
+<ckeditor #editor [config]="config" [(ngModel)]="html" (change)="onContentChanged()">
+  <ckbutton [name]="'uploadImage'" [command]="'uploadImage'" (click)="addImageUploadBtn()"
+    [icon]="'/assets/authoring/ckeditor/plugins/icons.png'" [label]="imageName"
+    [toolbar]="'insert'">
+  </ckbutton>
+  <ckbutton [name]="'uploadFile'" [command]="'uploadFile'" (click)="addFileUploadBtn()"
+    [icon]="'/assets/authoring/ckeditor/plugins/icons.png'" [label]="fileName"
+    [toolbar]="'insert'">
+  </ckbutton>
+  <ckbutton [name]="'Blank'" [command]="'Blank'" (click)="addBlankBtn()"
+    [icon]="'/assets/authoring/ckeditor/plugins/icons.png'" [label]="blankName"
+    [toolbar]="'insert'">
+  </ckbutton>
+</ckeditor>
+
+<span [hidden]="true" #uploadFile i18n>Upload File</span>
+<span [hidden]="true" #uploadImage i18n>Upload Image</span>
+<span [hidden]="true" #addBlank i18n>Add Blank</span>

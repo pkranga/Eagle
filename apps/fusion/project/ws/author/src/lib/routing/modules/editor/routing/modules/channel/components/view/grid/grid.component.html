@@ -1,0 +1,18 @@
+<!--               "Copyright 2020 Infosys Ltd.
+               Use of this source code is governed by GPL v3 license that can be found in the LICENSE file or at https://opensource.org/licenses/GPL-3.0
+               This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3" -->
+<div class="flex flex-wrap parentClass" *ngFor="let row of processedWidgets; let i = index"
+  (mouseenter)="hover[i] = true" (mouseleave)="hover[i] = false" [ngClass]="containerClass">
+  <div class="box child childClass" *ngFor="let col of row" [ngClass]="col.className" [ngStyle]="col?.styles">
+    <ws-auth-renderer [id]="col.id" [isSubmitPressed]="isSubmitPressed"></ws-auth-renderer>
+  </div>
+  <button mat-icon-button class=" mat-elevation-z5 insert-botton padding-remove" [ngClass]="{'visible': hover[i]}"
+    *ngIf="i !== (processedWidgets || []).length -1" i18n-matTooltip matTooltip="Insert a new row"
+    (click)="addRow(i+1)">
+    <mat-icon class="text-white small-icon ws-mat-primary-text">add_box</mat-icon>
+  </button>
+</div>
+<button mat-icon-button class=" mat-elevation-z5 ws-mat-accent-background small-button padding-remove  margin-top-m"
+  i18n-matTooltip matTooltip="Add a new row" (click)="addRow()">
+  <mat-icon class="text-white small-icon">add</mat-icon>
+</button>

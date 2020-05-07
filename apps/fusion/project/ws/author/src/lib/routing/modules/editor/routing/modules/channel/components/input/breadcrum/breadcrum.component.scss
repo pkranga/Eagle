@@ -1,0 +1,41 @@
+/*               "Copyright 2020 Infosys Ltd.
+               Use of this source code is governed by GPL v3 license that can be found in the LICENSE file or at https://opensource.org/licenses/GPL-3.0
+               This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3" */
+.required {
+  &::after {
+    color: red;
+    content: " *";
+  }
+}
+
+.full-width {
+  width: 100%;
+}
+
+.row-wise {
+  display: flex;
+  flex-direction: row;
+}
+
+.column-wise {
+  display: flex;
+  flex-direction: column;
+}
+
+.card-design {
+  margin-top: 30px;
+}
+
+.page-design {
+  width: 60%;
+  margin: 50px auto;
+
+}
+
+.top-bar-design {
+  justify-content: space-between;
+}
+
+.cardTitle-design {
+  margin: auto 0;
+}

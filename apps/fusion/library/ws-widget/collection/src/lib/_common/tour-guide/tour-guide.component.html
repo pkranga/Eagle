@@ -1,0 +1,31 @@
+<!--               "Copyright 2020 Infosys Ltd.
+               Use of this source code is governed by GPL v3 license that can be found in the LICENSE file or at https://opensource.org/licenses/GPL-3.0
+               This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3" -->
+<tour-step-template>
+  <ng-template let-step="step">
+    <mat-card (click)="$event.stopPropagation()">
+      <mat-card-title>
+        {{step?.title}}
+      </mat-card-title>
+      <mat-card-content>
+        {{step?.content}}
+      </mat-card-content>
+      <mat-card-actions class="btnBlock">
+        <div class="navBtn">
+          <button class="nav-btn-prev" mat-icon-button [disabled]="!tourService.hasPrev(step)" (click)="tourService.prev()">
+            <mat-icon class="tourNav_icon">chevron_left</mat-icon>
+          </button>
+          <button class="nav-btn-next" mat-icon-button [disabled]="!tourService.hasNext(step)" (click)="tourService.next()">
+            <mat-icon class="tourNav_icon">chevron_right</mat-icon>
+          </button>
+        </div>
+        <div class="endBtn">
+          <button class="end-btn" mat-button (click)="tourService.end()">{{step?.endBtnTitle}}</button>
+        </div>
+      </mat-card-actions>
+    </mat-card>
+  </ng-template>
+</tour-step-template>
+<ng-template #jsonTemplate let-step="step">
+  {{ step | json }}
+</ng-template>

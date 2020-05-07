@@ -1,0 +1,23 @@
+<!--               "Copyright 2020 Infosys Ltd.
+               Use of this source code is governed by GPL v3 license that can be found in the LICENSE file or at https://opensource.org/licenses/GPL-3.0
+               This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3" -->
+<mat-toolbar>
+  <a mat-icon-button [routerLink]="'/app/features'">
+    <mat-icon>arrow_back</mat-icon>
+  </a>
+  <span i18n="page title: leaderboard" class="margin-left-xs">Leaderboard</span>
+  <span class="spacer"></span>
+</mat-toolbar>
+
+<nav mat-tab-nav-bar mat-align-tabs="center">
+  <a mat-tab-link class="mat-body-2" (click)="routeToTab('weekly')" [active]="activeTab === 'weekly'"
+    i18n="weekly leaderboard">Weekly</a>
+  <a mat-tab-link class="mat-body-2" (click)="routeToTab('monthly')" [active]="activeTab === 'monthly'"
+    i18n="monthly leaderboard">Monthly</a>
+  <a mat-tab-link class="mat-body-2" (click)="routeToTab('hall-of-fame')" [active]="activeTab === 'hall-of-fame'"
+    i18n="hall of fame">Hall of Fame</a>
+</nav>
+
+<section class="container-balanced pb-4 px-4">
+  <router-outlet></router-outlet>
+</section>

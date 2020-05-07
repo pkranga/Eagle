@@ -1,0 +1,78 @@
+/*               "Copyright 2020 Infosys Ltd.
+               Use of this source code is governed by GPL v3 license that can be found in the LICENSE file or at https://opensource.org/licenses/GPL-3.0
+               This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3" */
+@import 'ws-vars';
+@import 'ws-mixins';
+
+// $border-color: #c7c7c7;
+$border-color: #d8d8d8;
+.contents-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin: $size-m 0 $size-l 0;
+  .main-container {
+    width: 69%;
+    padding-right: 2 * $size-l;
+    box-sizing: border-box;
+    .toc-section {
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1px solid $border-color;
+      padding-bottom: $size-s;
+    }
+    .content-card {
+      padding: $size-s 0;
+      border-bottom: 1px solid $border-color;
+    }
+    @include breakpoint-lt-m {
+      width: 100%;
+      padding-right: 0;
+      margin-bottom: $size-xl;
+    }
+  }
+  .side-container {
+    flex: 1;
+    min-width: 250px;
+    @include breakpoint-lt-m {
+      width: 100%;
+    }
+  }
+  .next-card {
+    margin: $size-xs 0;
+    mat-card-title {
+      font-size: 1.1rem;
+    }
+    mat-card-subtitle {
+      margin-bottom: 0;
+    }
+    .next-content-image {
+      background-size: cover;
+      background-position: center;
+    }
+  }
+}
+
+.playgrounds-container {
+  margin: 0 0 $size-l 0;
+  .plg-card {
+    position: relative;
+    margin-bottom: $size-s;
+    margin-right: $size-l;
+    .plg-img {
+      display: block;
+      width: 265px;
+      height: 150px;
+    }
+    .plg-overlay {
+      position: absolute;
+      bottom: 0;
+      padding: $size-xs $size-s;
+      box-sizing: border-box;
+      left: 0;
+      right: 0;
+      background: linear-gradient(90deg, #000000, transparent);
+      color: white;
+    }
+  }
+}

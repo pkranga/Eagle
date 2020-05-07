@@ -1,0 +1,45 @@
+<!--               "Copyright 2020 Infosys Ltd.
+               Use of this source code is governed by GPL v3 license that can be found in the LICENSE file or at https://opensource.org/licenses/GPL-3.0
+               This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3" -->
+<h2 mat-dialog-title i18n>Provide comments</h2>
+<mat-dialog-content>
+  <form [formGroup]="commentsForm">
+    <mat-form-field appearance="fill" class="width-1-1">
+      <textarea rows="3" matInput placeholder=" For eg. This content is submitted/accepted/rejected because..." name="name" formControlName="comments"
+        required></textarea>
+      <mat-error i18n *ngIf="showError(commentsForm.controls.comments)" i18n="Comments Error|Explains Comments is mandatory field">
+        Comments is mandatory
+      </mat-error>
+    </mat-form-field>
+    <div *ngIf="contentMeta && contentMeta.status != 'Draft' && contentMeta.status != 'Live'">
+      <label>
+        <b i18n="Action Label|Label which explains user to enter action">Action</b>
+      </label>
+      <div>
+        <mat-button-toggle-group class="custom-form-control" multiple="false" formControlName='action'>
+          <mat-button-toggle [value]="'accept'" i18n>Accept</mat-button-toggle>
+          <mat-button-toggle [value]="'reject'" i18n>Reject</mat-button-toggle>
+        </mat-button-toggle-group>
+      </div>
+    </div>
+    <div class="margin-top-s right-align">
+      <button mat-dialog-close mat-raised-button i18n>Cancel</button>
+      <button class="margin-left-s" (click) = "submitData()" mat-raised-button color="primary" i18n>Proceed</button>
+    </div>
+  </form>
+  <div *ngIf="contentMeta && contentMeta.comments && contentMeta.comments.length">
+    <b i18n="History|History of Comments" i18n>History</b>
+    <mat-card *ngFor="let comment of contentMeta.comments" class="example-container margin-10">
+      <mat-card-header>
+        <mat-icon class="avatar" mat-card-avatar>account_circle</mat-icon>
+        <mat-card-title>{{comment.name}}</mat-card-title>
+        <mat-card-subtitle>{{comment.date | date}}</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <p>
+          {{comment.comment}}
+        </p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</mat-dialog-content>

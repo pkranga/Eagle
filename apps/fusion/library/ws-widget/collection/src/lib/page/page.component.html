@@ -1,0 +1,28 @@
+<!--               "Copyright 2020 Infosys Ltd.
+               Use of this source code is governed by GPL v3 license that can be found in the LICENSE file or at https://opensource.org/licenses/GPL-3.0
+               This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3" -->
+<mat-toolbar *ngIf="pageData?.navigationBar && !error" [color]="navBackground?.color" [ngStyle]="navBackground?.styles">
+  <ws-widget-btn-page-back [widgetData]="{ url: pageData?.navigationBar?.pageBackLink }"></ws-widget-btn-page-back>
+  <span class="ml-4">{{ pageData?.navigationBar?.pageTitle }}</span>
+  <span class="spacer"></span>
+  <ng-container *ngIf="!isXSmall">
+    <ng-container *ngFor="let link of links" [wsResolverWidget]="link"></ng-container>
+  </ng-container>
+  <ng-container *ngIf="isXSmall">
+    <ng-container *ngIf="pageData?.navigationBar?.xsmallNonMenuLinks">
+      <ng-container *ngFor="let link of pageData?.navigationBar?.xsmallNonMenuLinks" [wsResolverWidget]="link">
+      </ng-container>
+    </ng-container>
+    <button type="button" mat-icon-button *ngIf="links?.length" [matMenuTriggerFor]="quickLinksMenu">
+      <mat-icon>more_vertical</mat-icon>
+    </button>
+  </ng-container>
+</mat-toolbar>
+<ng-container *ngIf="!error" [wsResolverWidget]="pageData?.pageLayout"></ng-container>
+<h2 *ngIf="error" class="mat-error margin-top-m text-center" i18n>
+  Check your network connection and reload the page.
+</h2>
+
+<mat-menu #quickLinksMenu="matMenu">
+  <ng-container *ngFor="let link of links" [wsResolverWidget]="link"></ng-container>
+</mat-menu>

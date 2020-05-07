@@ -1,0 +1,29 @@
+<!--               "Copyright 2020 Infosys Ltd.
+               Use of this source code is governed by GPL v3 license that can be found in the LICENSE file or at https://opensource.org/licenses/GPL-3.0
+               This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3" -->
+<mat-card class="margin-m">
+  <viewer-dbms-exercise [resourceContent]="processedContent" *ngIf="
+      processedContent?.rdbms?.pageType === 'exercise' ||
+      processedContent?.rdbms?.pageType === 'assignment'
+    ">
+  </viewer-dbms-exercise>
+
+  <viewer-dbms-concept-dropdown [resourceContent]="processedContent" *ngIf="
+      processedContent?.rdbms?.pageType === 'dropdown' ||
+      processedContent?.rdbms?.pageType === 'concept'
+    ">
+  </viewer-dbms-concept-dropdown>
+
+  <viewer-dbms-concept-create [resourceContent]="processedContent"
+    *ngIf="processedContent?.rdbms?.pageType === 'create'">
+  </viewer-dbms-concept-create>
+
+  <viewer-dbms-best-practice [resourceContent]="processedContent" *ngIf="
+      processedContent?.rdbms?.pageType === 'practice' ||
+      processedContent?.rdbms?.pageType === 'practiceDropdown'
+    ">
+  </viewer-dbms-best-practice>
+
+  <viewer-dbms-playground [resourceContent]="processedContent"
+    *ngIf="processedContent?.rdbms?.pageType === 'playground'"></viewer-dbms-playground>
+</mat-card>

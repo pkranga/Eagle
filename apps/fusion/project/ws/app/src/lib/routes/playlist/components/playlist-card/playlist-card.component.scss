@@ -1,0 +1,38 @@
+/*               "Copyright 2020 Infosys Ltd.
+               Use of this source code is governed by GPL v3 license that can be found in the LICENSE file or at https://opensource.org/licenses/GPL-3.0
+               This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3" */
+@import 'ws-vars';
+
+.card {
+  height: 120px;
+}
+
+.overlay {
+  width: 33%;
+  height: 100%;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  background: rgba(90, 90, 90, 0.54);
+}
+
+.thumbnail {
+  width: 100%;
+  height: 100%;
+}
+
+.color-white {
+  color: white;
+}
+
+.playlist-count {
+  font-size: 2em;
+}
+
+.playlist-icon {
+  font-size: 3em;
+}
+
+.margin-top-xxs {
+  margin-top: $size-xs / 2;
+}

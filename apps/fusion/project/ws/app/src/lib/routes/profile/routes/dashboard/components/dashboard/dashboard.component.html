@@ -1,0 +1,237 @@
+<!--               "Copyright 2020 Infosys Ltd.
+               Use of this source code is governed by GPL v3 license that can be found in the LICENSE file or at https://opensource.org/licenses/GPL-3.0
+               This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3" -->
+<div class="profile-container">
+  <div class="flex flex-wrap">
+    <mat-card class="about-me ">
+      <div class="user-avatar ws-mat-primary-lite-background-on-day">
+        <ws-widget-user-image class="user-image" [email]="userEmail" [imageType]="'rounded'"></ws-widget-user-image>
+        <div class="user-name">
+          <h2 class="pl-4 ws-mat-primary-text sm:pl-0">{{ userName }}</h2>
+          <h3 class="font-bold  margin-zero pl-4 sm:pl-0">{{ departmentName }}</h3>
+        </div>
+      </div>
+
+      <div class="p-4">
+        <div class="flex flex-middle mb-4">
+          <mat-icon>tag_faces</mat-icon>
+          <span class="font-bold mat-title margin-zero pl-4" i18n="interest you follow">
+            Your Interests</span>
+          <span class="spacer"></span>
+
+          <button mat-button class="interest-edit" color="primary" [routerLink]="'/app/profile/interest'">
+            <mat-icon> edit</mat-icon>
+            <span i18n class="px-2">Edit</span>
+          </button>
+
+          <!-- <a
+            mat-raised-button
+            type="button"
+            class="interest-edit"
+            i18n
+            [routerLink]="'/app/profile/interest'"
+            >Edit
+          </a> -->
+        </div>
+        <div *ngIf="!interests?.length" class="pl-4 py-4">
+          <span i18n="no interest">No interest added</span>
+        </div>
+        <mat-chip-list>
+          <mat-chip color="primary" selected *ngFor="let interest of interests">
+            {{ interest }}
+          </mat-chip>
+        </mat-chip-list>
+      </div>
+    </mat-card>
+
+    <div *ngIf="enabledTabs?.subFeatures?.knowledgeBoard" class="description-container">
+      <div class="flex flex-between flex-wrap learning-container">
+        <div class="mat-card most-used">
+          <div class="flex flex-middle">
+            <mat-icon>tag_faces</mat-icon>
+            <span class="font-bold mat-title margin-zero pl-2" i18n="interest you follow">
+              You are Following</span>
+          </div>
+          <div class="text-center" *ngIf="followFetchStatus === 'fetching'">
+            <mat-spinner></mat-spinner>
+          </div>
+
+          <ng-container *ngIf="followFetchStatus !== 'fetching'">
+            <div class="flex flex-middle flex-between my-4 pr-4">
+              <span class="font-bold mat-title margin-zero" i18n="interest you follow">
+                Knowledge Board</span>
+
+              <button mat-button class="interest-edit" color="primary" [routerLink]="'/app/knowledge-board/home'">
+                <mat-icon> edit</mat-icon>
+                <span i18n class="pl-2">Edit</span>
+              </button>
+            </div>
+            <div *ngIf="followFetchStatus === 'error'" class="pl-4 py-4">
+              <span i18n="unable to fetch">Unable to fetch followed Knowledge Board, explore</span>
+              <a class="ws-mat-primary-text" [routerLink]="'/app/knowledge-board/home'">&nbsp;Knowledge Board</a>
+            </div>
+            <div *ngIf="followFetchStatus === 'done' && !knowledgeBoardFollow?.length" class="pl-4 py-4">
+              <span i18n="no knowledge board">No Knowledge Board being followed, explore</span>
+              <a class="ws-mat-primary-text" [routerLink]="'/app/knowledge-board/home'">&nbsp;Knowledge Board</a>
+            </div>
+
+            <mat-chip-list *ngIf="followFetchStatus === 'done' && knowledgeBoardFollow?.length">
+              <mat-chip class="ws-mat-primary-border-bold interest-chip kb-chip"
+                *ngFor="let board of knowledgeBoardFollow">
+                <a [routerLink]="'/app/knowledge-board/' + board.identifier">{{ board.name }}</a>
+              </mat-chip>
+            </mat-chip-list>
+
+            <!-- <div class="flex flex-middle my-4 pr-4">
+              <span class="font-bold mat-title margin-zero " i18n="interest you follow">
+                Channels</span
+              >
+              <span class="spacer"></span>
+              <button
+                mat-icon-button
+                class="interest-edit"
+                color="primary"
+path
+              >
+                <mat-icon> edit</mat-icon>
+                <span i18n class="px-2">Edit</span>
+              </button>
+            </div>
+            <div *ngIf="!channelsFollow?.length" class=" py-4">
+              <span i18n="no interest">No Channels being followed, explore</span>
+path
+                >&nbsp; Channels</a
+              >
+            </div>
+            <mat-chip-list>
+              <mat-chip
+                class="ws-mat-primary-border-bold interest-chip"
+                *ngFor="let channelFollow of channelsFollow"
+              >
+                {{ channelFollow.name }}
+              </mat-chip>
+            </mat-chip-list> -->
+          </ng-container>
+
+          <!-- <ws-utils-horizontal-scroller class="follow-item block" [loadStatus]="followFetchStatus">
+            <ng-container *ngIf="knowledgeBoardFollow?.length">
+              <ws-widget-card-knowledge
+                *ngFor="let board of knowledgeBoardFollow"
+                [widgetData]="{
+                  content: board,
+                  actionBtns: { share: false, follow: false },
+                  clickUrl: '/app/knowledge-board/' + board.identifier
+                }"
+              >
+              </ws-widget-card-knowledge>
+            </ng-container>
+          </ws-utils-horizontal-scroller> -->
+        </div>
+        <!-- <div class="mat-card learning-time">
+          <div class="flex flex-middle">
+            <mat-icon>history</mat-icon>
+            <span class="font-bold mat-title margin-zero pl-2" i18n="learning time">Learning Time</span>
+          </div>
+          <div class="font-bold mat-title title-no" i18n>Data will appear once it's aggregated</div>
+        </div> -->
+      </div>
+    </div>
+
+    <div *ngIf="enabledTabs?.subFeatures?.calendar && apiFetchStatus !=='error'"
+      class=" calendar-data description-container padding-xl mat-elevation-z2 ">
+      <div class=" text-center" *ngIf="apiFetchStatus === 'fetching'">
+        <mat-spinner></mat-spinner>
+      </div>
+      <div *ngIf="apiFetchStatus === 'done'" class="flex flex-between">
+        <div class="w-full">
+          <div class="flex flex-middle">
+            <mat-icon>history</mat-icon>
+            <h2 class="font-bold mat-title margin-zero pl-2" i18n="learning time">Learning Time</h2>
+          </div>
+          <!-- <div class="flex flex-middle">
+            <h2 i18n>Total learning hours</h2>
+            <button type="button" mat-icon-button (click)="showInfo('myLearningHours')" i18n-matTooltip
+              matTooltip="info" class="margin-left-xs margin-bottom-m">
+              <mat-icon>info</mat-icon>
+            </button>
+          </div> -->
+
+          <p class="ws-mat-primary-text mat-display-1 margin-remove-bottom font-bold margin-left-xl">
+            {{ totalLearningHours | pipeDurationTransform: 'hour' }}
+          </p>
+          <!-- <div class="margin-top-xl">
+            <h2>
+              <ng-container i18n>Time Spent on</ng-container>
+              {{ timeEvent | date: 'd MMM, y' }}
+            </h2>
+            <h1 *ngIf="timeSpent > 0">
+              {{ timeSpent | pipeDurationTransform: 'hms' }}
+              <ng-container i18n>mins</ng-container>
+            </h1>
+            <h1 *ngIf="timeSpent === 0">
+              {{ timeSpent }}
+              <ng-container i18n>mins</ng-container>
+            </h1>
+          </div> -->
+          <div class="w-full margin-left-xl margin-top-s" *ngIf="timeSpentData">
+            <h4>
+              <ng-container *ngIf="orgWideTimePercent !== 0" i18n> You are </ng-container>
+              <ng-container *ngIf="orgWideTimePercent > 0 || orgWideTimePercent < 0">
+                {{ orgWideTimePercent }}
+              </ng-container>
+              <ng-container *ngIf="orgWideTimePercent > 0" i18n>
+                % more than org-wide average
+              </ng-container>
+              <ng-container *ngIf="orgWideTimePercent < 0" i18n>
+                % less than org-wide average
+              </ng-container>
+              <ng-container *ngIf="orgWideTimePercent === 0" i18n>
+                You are with org wide average
+              </ng-container>
+            </h4>
+          </div>
+          <div class="flex flex-middle">
+            <mat-icon>history</mat-icon>
+            <h2 class="font-bold mat-title margin-zero pl-2" i18n="learning points">Learning Points</h2>
+          </div>
+          <p class="ws-mat-primary-text mat-display-1 margin-remove-bottom font-bold margin-left-xl">
+            {{ userPointsEarned }}
+          </p>
+          <div class="w-full margin-left-xl margin-top-s" *ngIf="timeSpentData">
+            <!-- <h4 i18n>Learning points compared to Org</h4> -->
+            <h4>
+              <ng-container *ngIf="orgWidePointsPercent !== 0" i18n> You are </ng-container>
+              <ng-container *ngIf="orgWidePointsPercent > 0 || orgWidePointsPercent < 0">
+                {{ orgWidePointsPercent }}
+              </ng-container>
+              <ng-container *ngIf="orgWidePointsPercent > 0" i18n>
+                % more than org-wide average
+              </ng-container>
+              <ng-container *ngIf="orgWidePointsPercent < 0" i18n>
+                % less than org-wide average
+              </ng-container>
+              <ng-container *ngIf="orgWidePointsPercent === 0" i18n>
+                You are with org wide average
+              </ng-container>
+            </h4>
+          </div>
+        </div>
+        <!-- <ws-app-calendar *ngIf="timeSpentData" (notify)="calendarEvent($event)" [specialDates]="specialDates"
+          class="calendar w-1/2"></ws-app-calendar> -->
+      </div>
+    </div>
+  </div>
+  <div *ngIf="enabledTabs?.subFeatures?.pendingCourses && coursePending?.length > 0" class="margin-top-xl">
+    <h1 class="mat-h1" i18n>Pending Courses</h1>
+    <div class="text-center" *ngIf="historyFetchStatus === 'fetching'">
+      <mat-spinner></mat-spinner>
+    </div>
+    <ws-utils-horizontal-scroller *ngIf="historyFetchStatus === 'done'" [loadStatus]="'done'">
+      <ws-app-course-pending-card class="margin-bottom-xl" *ngFor="let pending of coursePending" [cardData]="pending">
+      </ws-app-course-pending-card>
+    </ws-utils-horizontal-scroller>
+  </div>
+  <div *ngIf="enabledTabs?.subFeatures?.latest">
+    <ng-container [wsResolverWidget]="widgetResolverData"></ng-container>
+  </div>
+</div>

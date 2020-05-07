@@ -1,0 +1,29 @@
+/*               "Copyright 2020 Infosys Ltd.
+               Use of this source code is governed by GPL v3 license that can be found in the LICENSE file or at https://opensource.org/licenses/GPL-3.0
+               This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3" */
+@import 'ws-vars';
+
+.cohorts-head {
+  padding: $size-xs $size-m;
+}
+.unit-cohort {
+  display: flex;
+  align-items: center;
+  margin-bottom: $size-m;
+  .cohort-image {
+    $user-image-size: 32px;
+    width: $user-image-size;
+    height: $user-image-size;
+    font-size: $user-image-size;
+  }
+}
+.cohortSection{
+  margin:50px auto;
+  width: 70%;
+}
+.flex{
+  display: flex;
+}
+.chorotsBlock{
+background: #ffffff;
+}

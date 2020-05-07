@@ -1,0 +1,63 @@
+/*               "Copyright 2020 Infosys Ltd.
+               Use of this source code is governed by GPL v3 license that can be found in the LICENSE file or at https://opensource.org/licenses/GPL-3.0
+               This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3" */
+@import 'ws-vars';
+
+// .card-img {
+//   width: 150px;
+//   height: 100%;
+// }
+
+// $title-line-count: 2;
+// $title-line-height: 1.3em;
+// .title-text {
+//   margin: $size-s 0;
+//   position: relative;
+//   overflow: hidden;
+//   height: $title-line-count * $title-line-height;
+//   line-height: $title-line-height;
+// }
+
+.card-space-saving-container {
+  $card-padding: $size-m;
+  $action-btn-size: 2.5 * $size-m;
+  $card-width: 265px;
+  position: relative;
+  width: $card-width;
+  height: 100%;
+  box-sizing: border-box;
+
+  mat-card-content {
+    margin: 0 -0.25 * $card-padding;
+    min-height: 120px;
+  }
+
+  .card-img {
+    height: 150px;
+    display: block;
+  }
+
+  .card-header-meta {
+    margin-top: 8px;
+  }
+
+  $title-line-count: 2;
+  $title-line-height: 1.3em;
+
+  .title-text {
+    margin: $size-s 0;
+    position: relative;
+    overflow: hidden;
+    height: $title-line-count * $title-line-height;
+    line-height: $title-line-height;
+  }
+
+
+}
+
+.greyOut {
+  filter: grayscale(1);
+  opacity: 0.4;
+  cursor: default !important;
+  pointer-events: none;
+}

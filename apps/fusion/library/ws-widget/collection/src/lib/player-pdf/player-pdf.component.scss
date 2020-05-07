@@ -1,0 +1,39 @@
+/*               "Copyright 2020 Infosys Ltd.
+               Use of this source code is governed by GPL v3 license that can be found in the LICENSE file or at https://opensource.org/licenses/GPL-3.0
+               This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3" */
+.pdf-nav-bar {
+  // position: relative;
+  // height: 40px;
+  // font-size: 1em;
+  display: flex;
+  align-items: center;
+  min-height: 56px;
+  overflow: hidden;
+  font: inherit;
+}
+.pdf-page-container {
+  width: calc(100%-80px);
+  text-align: center;
+  overflow: auto;
+}
+.pdf-page-num {
+  margin: 0 5px;
+}
+.pdf-container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  position: relative;
+}
+
+.custom-scroll-small {
+  overflow-y: hidden;
+}
+
+.mat-toolbar-single-row {
+  padding: 0;
+}

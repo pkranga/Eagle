@@ -1,0 +1,34 @@
+<!--               "Copyright 2020 Infosys Ltd.
+               Use of this source code is governed by GPL v3 license that can be found in the LICENSE file or at https://opensource.org/licenses/GPL-3.0
+               This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3" -->
+<div class="row-wise" style="position: relative;">
+  <mat-radio-group class="radio my-auto" [(ngModel)]="inputType" (ngModelChange)="onSelectionChange()">
+    <mat-radio-button class="radioButton" [value]="'id'" i18n>
+      Provide Id of the content
+    </mat-radio-button>
+    <mat-radio-button class="radioButton" [value]="'upload'" checked i18n>
+      Upload File
+    </mat-radio-button>
+    <mat-radio-button class="radioButton" [value]="'external'" i18n>
+      External Video Url
+    </mat-radio-button>
+  </mat-radio-group>
+</div>
+<br>
+<!-- <ng-container [ngSwitch]="inputType"> -->
+<ng-container *ngIf="inputType === 'upload' || inputType === 'id'">
+  <ws-auth-audio-video [inputType]=" inputType" [isSubmitPressed]="isSubmitPressed" [content]="content.videoData"
+    [isVideo]="isVideo">
+  </ws-auth-audio-video>
+</ng-container>
+<!-- <ng-container *ngSwitchCase="'id'">
+    <ws-auth-audio-video [inputType]=" inputType" [isSubmitPressed]="isSubmitPressed" [content]="content.videoData"
+      [isVideo]="isVideo">
+    </ws-auth-audio-video>
+  </ng-container> -->
+<ng-container *ngIf="inputType === 'external'">
+  <ws-auth-embed [editorType]="'basic'" [forVideo]="true" [content]="content.externalData"
+    [isSubmitPressed]="isSubmitPressed" (data)="content.externalData = $event.content">
+  </ws-auth-embed>
+</ng-container>
+<!-- </ng-container> -->

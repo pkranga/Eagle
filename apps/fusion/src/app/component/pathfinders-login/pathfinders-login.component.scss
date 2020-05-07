@@ -1,0 +1,57 @@
+/*               "Copyright 2020 Infosys Ltd.
+               Use of this source code is governed by GPL v3 license that can be found in the LICENSE file or at https://opensource.org/licenses/GPL-3.0
+               This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3" */
+@import 'ws-mixins';
+
+.app-logo-navbar {
+  width: 125px;
+  height: auto;
+  margin-bottom: 3px;
+  @include breakpoint-xs {
+    width: 100px;
+  }
+}
+
+.logo {
+  @include breakpoint-xs {
+    padding-left: 0 !important;
+    padding-right: 0.25rem !important;
+  }
+}
+
+.login-background {
+path
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: calc(100vh - 56px);
+}
+
+.app-logo-content {
+  width: calc(100% - 20px);
+  max-width: 400px;
+}
+
+.nav-sign-in {
+  color: white !important;
+  @include breakpoint-xs {
+    display: none;
+  }
+}
+
+.sign-in {
+  margin-top: 1.25rem;
+  color: white !important;
+}
+
+.login-content {
+  text-align: center;
+  width: 100%;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.text-color {
+  color: white !important;
+}

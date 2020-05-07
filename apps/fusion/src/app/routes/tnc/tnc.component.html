@@ -1,0 +1,19 @@
+<!--               "Copyright 2020 Infosys Ltd.
+               Use of this source code is governed by GPL v3 license that can be found in the LICENSE file or at https://opensource.org/licenses/GPL-3.0
+               This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3" -->
+<div>
+  <!-- <ng-container *ngIf="errorFetchingTnc" [wsResolverWidget]="errorWidget"></ng-container> -->
+  <ws-tnc-renderer *ngIf="tncData" (tncChange)="getTnc($event)" (dpChange)="getDp($event)" [tncData]="tncData">
+  </ws-tnc-renderer>
+</div>
+
+<div class="tnc-bottom-navbar" *ngIf="!isPublic && tncData">
+  <button *ngIf="!tncData?.isAccepted" [disabled]="isAcceptInProgress" (click)="acceptTnc()" color="primary"
+    mat-flat-button>
+    <ng-container *ngIf="!isAcceptInProgress" i18n>Accept & Proceed</ng-container>
+    <ng-container *ngIf="isAcceptInProgress" i18n>Please Wait...</ng-container>
+  </button>
+  <a *ngIf="tncData?.isAccepted" type="button" color="primary" mat-flat-button routerLink="/app/features" i18n>
+    Done
+  </a>
+</div>

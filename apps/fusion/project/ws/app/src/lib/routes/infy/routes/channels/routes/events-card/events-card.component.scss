@@ -1,0 +1,24 @@
+/*               "Copyright 2020 Infosys Ltd.
+               Use of this source code is governed by GPL v3 license that can be found in the LICENSE file or at https://opensource.org/licenses/GPL-3.0
+               This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3" */
+@import 'ws-mixins';
+@import 'ws-common';
+
+.event {
+  width: 14em;
+}
+
+.event-icon {
+  width: 1em;
+  height: 1em;
+  font-size: 3em;
+  margin-right: $size-m;
+  @include breakpoint-gt-xs {
+    margin-right: 0;
+  }
+}
+
+.event-name {
+  line-height: 1.2;
+  height: 2.4em;
+}

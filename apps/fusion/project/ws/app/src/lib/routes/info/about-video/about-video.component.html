@@ -1,0 +1,15 @@
+<!--               "Copyright 2020 Infosys Ltd.
+               Use of this source code is governed by GPL v3 license that can be found in the LICENSE file or at https://opensource.org/licenses/GPL-3.0
+               This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3" -->
+<div class="flex flex-column">
+  <mat-radio-group class="flex flex-center pb-4" (change)="onItemChange($event.value)"
+    *ngIf="introVideos && objectKeys(introVideos).length > 1">
+    <ng-container i18n>Choose video's language</ng-container>
+    <mat-radio-button color="primary" class="px-2" *ngFor="let key of objectKeys(introVideos)" [checked]="key == 'en'"
+      [value]="key">
+      <ws-widget-locale-translator [langCode]="key"></ws-widget-locale-translator>
+    </mat-radio-button>
+    <!-- <mat-radio-button color="primary" class="px-2" [value]="'de'" i18n>German</!-->
+  </mat-radio-group>
+  <ng-container [wsResolverWidget]="widgetResolverData"></ng-container>
+</div>

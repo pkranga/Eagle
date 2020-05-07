@@ -1,0 +1,43 @@
+/*               "Copyright 2020 Infosys Ltd.
+               Use of this source code is governed by GPL v3 license that can be found in the LICENSE file or at https://opensource.org/licenses/GPL-3.0
+               This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3" */
+.cursor-disable {
+  cursor: not-allowed;
+}
+
+.example-card {
+  width: 250px;
+  height: 300px;
+}
+
+.padding {
+  padding: 20px;
+  cursor: pointer;
+}
+
+no-margin {
+  margin: 0px !important;
+}
+
+mat-card {
+  background-size: cover !important;
+}
+
+
+.img1 {
+  background-image: url('/assets/authoring/sample-templates/images/template-1.png') !important;
+}
+
+.img2 {
+  background-image: url('/assets/authoring/sample-templates/images/template-2.png') !important;
+}
+
+.commonImg {
+  width: 265px;
+  height: 150px;
+}
+
+.flex:nth-child(3n) {
+  page-break-after: always;
+  break-after: always;
+}

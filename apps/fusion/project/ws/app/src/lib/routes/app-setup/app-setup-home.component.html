@@ -1,0 +1,70 @@
+<!--               "Copyright 2020 Infosys Ltd.
+               Use of this source code is governed by GPL v3 license that can be found in the LICENSE file or at https://opensource.org/licenses/GPL-3.0
+               This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3" -->
+<mat-card class="setup-container">
+  <mat-horizontal-stepper
+    labelPosition="bottom"
+    [selectedIndex]="currentIndex"
+    (selectionChange)="onChange($event)"
+  >
+    <mat-step i18n-label label="About us" state="about">
+      <ws-app-about-video></ws-app-about-video>
+    </mat-step>
+    <mat-step i18n-label label="Interests" state="interest">
+      <ws-app-interest #userInterest></ws-app-interest>
+    </mat-step>
+    <mat-step i18n-label label="Settings" state="setting">
+      <ws-app-settings
+        #userSettings
+        [mode]="'setup'"
+        (langChangedEvent)="langChanged($event)"
+      ></ws-app-settings>
+    </mat-step>
+
+    <ng-template matStepperIcon="about">
+      <mat-icon>music_video</mat-icon>
+    </ng-template>
+    <ng-template matStepperIcon="interest">
+      <mat-icon>tag_faces</mat-icon>
+    </ng-template>
+    <ng-template matStepperIcon="setting">
+      <mat-icon>settings</mat-icon>
+    </ng-template>
+  </mat-horizontal-stepper>
+  <div class="flex flex-between">
+    <button [disabled]="currentIndex < 1" mat-raised-button color="primary" (click)="prevBtn()">
+      <mat-icon>chevron_left</mat-icon>
+      <span class="padding-left-xs" i18n>Prev</span>
+    </button>
+    <a
+      mat-raised-button
+      type="button"
+      color="primary"
+      *ngIf="currentIndex !== 2"
+      [routerLink]="'/page/home'"
+      i18n
+      >Skip</a
+    >
+    <button
+      mat-raised-button
+      type="button"
+      color="primary"
+      *ngIf="currentIndex == 2"
+      (click)="applyChanges()"
+      i18n
+    >
+      Done
+    </button>
+
+    <button
+      mat-raised-button
+      [disabled]="currentIndex > 1"
+      color="primary"
+      class="flex item-centre margin-left-s margin-right-s"
+      (click)="nextBtn()"
+    >
+      <span class="padding-left-xs" i18n>Next</span>
+      <mat-icon>chevron_right</mat-icon>
+    </button>
+  </div>
+</mat-card>

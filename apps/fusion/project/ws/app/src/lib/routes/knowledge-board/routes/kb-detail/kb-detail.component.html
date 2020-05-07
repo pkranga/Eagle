@@ -1,0 +1,313 @@
+<!--               "Copyright 2020 Infosys Ltd.
+               Use of this source code is governed by GPL v3 license that can be found in the LICENSE file or at https://opensource.org/licenses/GPL-3.0
+               This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3" -->
+<mat-toolbar [color]="pageNavbar?.color" [ngStyle]="pageNavbar?.styles">
+  <ws-widget-btn-page-back [widgetData]="{ url: 'back' }"></ws-widget-btn-page-back>
+  <span class="margin-left-xs text-truncate">
+    <span class="hidden sm:inline" i18n>Details</span>
+    <span class="inline sm:hidden">
+      <ng-container *ngIf="content?.name">{{ content?.name }}</ng-container>
+      <ng-container *ngIf="!content?.name" i18n>Details</ng-container>
+    </span>
+  </span>
+  <span class="spacer"></span>
+  <button *ngIf="rearrangeEnablerButtonEnabled && multipleStripWidget?.widgetData?.strips?.length" mat-button
+    (click)="reOrder(orderMsg.value, failedMsg.value)" matTooltip="Reorder" i18n-matTooltip
+    class="padding-width-remove">
+    <mat-icon>{{ reOrderEnabled ? 'save' : 'view_quilt' }}</mat-icon>
+    <span class="margin-left-xs hidden sm:inline text-truncate" i18n *ngIf="!reOrderEnabled">Reorder</span>
+    <span class="margin-left-xs hidden sm:inline text-truncate" i18n *ngIf="reOrderEnabled">Save</span>
+  </button>
+  <button *ngIf="createEnablerButtonEnabled && multipleStripWidget?.widgetData?.strips?.length" mat-button
+    (click)="startDelete()" matTooltip="Edit contents" i18n-matTooltip class="padding-width-remove"
+    [disabled]="editEnabled">
+    <mat-icon>edit</mat-icon>
+    <span class="margin-left-xs hidden sm:inline text-truncate" i18n>Edit</span>
+  </button>
+  <button *ngIf="createEnablerButtonEnabled" mat-button (click)="enableCreate()" matTooltip="Add contents"
+    i18n-matTooltip class="padding-width-remove">
+    <mat-icon>add_circle</mat-icon>
+    <span class="margin-left-xs hidden sm:inline text-truncate" i18n>Add</span>
+  </button>
+</mat-toolbar>
+
+<ng-container *ngIf="content">
+  <div class="ws-mat-primary-lite-background-on-day p-4 banner">
+    <div class="mx-4 sm:mx-8">
+      <h1 class="mat-display-2 hidden sm:block margin-bottom-s">
+        {{ content?.name }}
+      </h1>
+      <div *ngIf="content?.averageRating" class="flex items-center my-2 sm:my-6">
+        <mat-icon color="accent" class="mr-2" *ngFor="let rating of [1, 2, 3, 4, 5]">
+          {{ getRatingIcon(rating) }}</mat-icon>
+        <span class="ml-2 font-medium">{{ content?.averageRating | number: '1.1-1' }}&nbsp;</span>
+        <ng-container *ngIf="content?.totalRating">
+          <span>({{ content?.totalRating | pipeCountTransform }}&nbsp;</span>
+          <span i18n>votes)</span>
+        </ng-container>
+      </div>
+      <div class="ws-mat-primary-text mat-h4 flex">
+        <span i18n-matTooltip matTooltip="Followers" class="pr-4" *ngIf="followCount > 0 || followCount === 0">
+          <span class="font-weight-bold" i18n>Followers:</span>
+          {{followCount}}
+        </span>
+        <span *ngIf="content?.lastUpdatedOn" i18n-matTooltip matTooltip="Last Updated">
+          <span class="font-weight-bold" i18n>Updated:</span>
+          {{ content?.lastUpdatedOn | date }}
+        </span>
+        <span *ngIf="content?.viewCount" i18n-matTooltip matTooltip="Views" class="flex items-center text-right">
+          <mat-icon>remove_red_eye</mat-icon>&nbsp;
+          <span>
+            {{ content?.viewCount | pipeCountTransform }}
+            <ng-container *ngIf="content?.uniqueLearners">
+              ({{ content?.uniqueLearners | pipeCountTransform }}
+              <ng-container i18n>unique)</ng-container>
+            </ng-container>
+          </span>
+        </span>
+      </div>
+      <div class="flex flex-between">
+        <div *ngIf="content?.creatorDetails?.length">
+          <h3 class="mat-subheading-2 font-weight-500" i18n>CURATORS:</h3>
+          <div class="flex flex-between flex-col md:flex-row">
+            <div class="flex flex-middle mr-4 my-2 md:my-0" *ngFor="let author of content?.creatorContacts">
+              <ws-widget-user-image class="user-icon-container" [userName]="author.name" [email]="author.email"
+                [imageType]="'rounded'">
+              </ws-widget-user-image>
+              <span class="ml-2">
+                {{ author.name }}
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="width-expand text-right action-btns">
+          <ws-widget-btn-content-feedback-v2 [widgetData]="content | pipePartialContent: ['identifier', 'name']">
+          </ws-widget-btn-content-feedback-v2>
+          <ws-widget-btn-content-share [widgetData]="content"> </ws-widget-btn-content-share>
+          <ws-widget-btn-follow (followed)="follow($event)" (unfollowed)="unfollow($event)"
+            [widgetData]="{ targetId: content?.identifier, type: 'Knowledge Board' }">
+          </ws-widget-btn-follow>
+        </div>
+
+      </div>
+      <ng-container *ngIf="content?.status === 'Deleted' || content?.status === 'Expired'">
+        <h3 class="ws-mat-primary-text" i18n>
+          The content is expired or deleted. Please contact the authors for any query.
+        </h3>
+      </ng-container>
+    </div>
+  </div>
+
+  <!-- Overview -->
+  <div class="px-6 sm:px-8 md:px-10 py-2 mt-4 overview-container">
+    <mat-card class="flex-1 overview">
+      <h2 i18n>Overview</h2>
+      <mat-card-content>
+        <p class="text-justify" *ngIf="content?.description" i18n-title title="Description">
+          {{ content?.description }}
+        </p>
+        <!-- <ng-container *ngIf="widgetData?.strips?.length">
+          <h3>Classifiers:</h3>
+          <ul>
+            <li *ngFor="let strip of widgetData?.strips" class="mb-2">
+              <h4 class="margin-remove-bottom">
+                <div class="font-normal">
+                  {{ strip.title }}
+                </div>
+              </h4>
+              <p class="margin-remove-bottom" *ngIf="
+                  strip?.preWidgets?.length &&
+                  (strip?.preWidgets)[0]?.widgetData?.content?.reason?.length
+                ">
+                {{ (strip?.preWidgets)[0]?.widgetData?.content?.reason }}
+              </p>
+            </li>
+          </ul>
+        </ng-container> -->
+      </mat-card-content>
+    </mat-card>
+    <ws-widget-user-content-rating *ngIf="content?.identifier" [contentId]="content?.identifier">
+    </ws-widget-user-content-rating>
+  </div>
+
+  <!-- Add content -->
+  <div id="id-for-create-kb">
+    <div class="px-10 py-10" *ngIf="createEnabled">
+      <div class="flex">
+        <h1 i18n>Add Content</h1>
+        <span class="spacer"></span>
+        <button mat-icon-button (click)="createEnabled = false">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+      <div class="flex items-center">
+        <span class="pr-4">Sections</span>
+        <mat-form-field>
+          <mat-label i18n>Choose Section</mat-label>
+          <mat-select #matSelect [value]="contentClassifiers.indexOf(selectedClassifier) > -1 ? selectedClassifier : ''"
+            (selectionChange)="selectedClassifier = $event.value">
+            <mat-option value="" selected i18n>New</mat-option>
+            <mat-option *ngIf="contentClassifiers.indexOf('Default') < 0" value="Default" i18n>Default</mat-option>
+            <mat-option *ngFor="let classifier of contentClassifiers" [value]="classifier">
+              {{ classifier }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="pl-4" *ngIf="!matSelect.value">
+          <input matInput i18n-placeholder placeholder="Create a new section" #inputSelectedClass
+            [value]="selectedClassifier" (blur)="selectedClassifier = inputSelectedClass.value" />
+        </mat-form-field>
+      </div>
+      <ws-widget-picker-content [widgetData]="pickerContentData"
+        [selectedContentTypes]="['Course', 'Collection', 'Learning Path', 'Resource','Channel']"
+        (change)="onContentSelectionChanged($event?.content, $event?.checked)">
+      </ws-widget-picker-content>
+
+      <mat-form-field class="w-full">
+        <textarea matInput placeholder="Reason for adding" i18n-placeholder [(ngModel)]="reasonForAdd"></textarea>
+      </mat-form-field>
+
+      <div class="flex">
+        <span>
+          <span i18n class="mat-error" *ngIf="selectedContentIds.size === 0">Please select at least one
+            content<br /></span>
+        </span>
+        <span class="spacer"></span>
+        <button mat-raised-button color="primary" [disabled]="selectedContentIds.size === 0 || isAddingContent"
+          (click)="addContent(addMsg.value, failedMsg.value)" i18n>
+          Add
+        </button>
+      </div>
+    </div>
+  </div>
+  <!-- Contents distributed on classifiers -->
+  <ng-container [wsResolverWidget]="multipleStripWidget"
+    *ngIf="multipleStripWidget && !editEnabled && !reOrderEnabled && !createEnabled"></ng-container>
+
+  <!-- Edit contents -->
+  <div class="px-6 sm:px-8 md:px-10 py-3" id="delete-kb-content" [hidden]="!editEnabled">
+    <h2 i18n>Delete contents</h2>
+    <mat-divider></mat-divider>
+    <div class="mt-5" *ngFor="let strip of multipleStripWidget?.widgetData?.strips">
+      <mat-form-field>
+        <input matInput [placeholder]="strip.title" [(ngModel)]="strip.title" />
+      </mat-form-field>
+      <div class="flex flex-wrap">
+        <div *ngFor="let widget of strip?.preWidgets"
+          class="w-full sm:w-1/2 md:w-1/3 lg:w-1/3 xl:w-1/5 p-2 box-sizing-box">
+          <mat-card class="box-sizing-box height-1-1">
+            <mat-checkbox (change)="onChangeDelete($event, widget?.widgetData?.content?.identifier)">
+              <h3 class="margin-remove">{{ widget?.widgetData?.content?.name }}</h3>
+            </mat-checkbox>
+            <ws-widget-display-content-type class="ml-6 block"
+              [displayContentType]="widget?.widgetData?.content?.displayContentType"></ws-widget-display-content-type>
+          </mat-card>
+        </div>
+      </div>
+    </div>
+    <div class="text-right">
+      <button mat-flat-button color="primary" class="margin-right-s"
+        (click)="openDeleteDialog(selectedDeleteIds, deleteMsg.value, failedMsg.value, updateMsg.value)"
+        [disabled]="isDeleting">
+        <ng-container i18n *ngIf="isDeleting">Please Wait...</ng-container>
+        <ng-container i18n *ngIf="!isDeleting">Done</ng-container>
+      </button>
+      <button mat-stroked-button (click)="revertEdit()" [disabled]="isDeleting" i18n>
+        Cancel
+      </button>
+    </div>
+  </div>
+
+
+
+  <!-- Rearrange contents -->
+  <div class="px-6 sm:px-8 md:px-10 py-3" id="rearrange-kb-content" [hidden]="!reOrderEnabled">
+    <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
+      <div class="example-box" *ngFor="let section of widgetData?.strips" cdkDrag>
+        <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
+        <mat-accordion class="width-1-1">
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                {{ section?.title }}
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div cdkDropList class="example-list" (cdkDropListDropped)="drop2($event, section?.preWidgets)">
+              <div class="example-box" *ngFor="let content of section?.preWidgets" cdkDrag>
+                <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
+                <div class="width-expand flat-list-content margin-xs">
+                  <span class="width-expand flex flex-middle">
+                    <img i18n-alt alt="thumbnail"
+                      class="viewer-toc-thumbnail align-self-start margin-auto mat-app-background"
+                      [src]="content?.widgetData?.content?.appIcon" />
+                    <span class="width-1-1 margin-left-m flex flex-wrapped align-self-start">
+                      <div class="width-1-1 flex flex-between">
+                        <div class="mat-body-2 text-truncate flex">
+                          <span>
+                            {{ content?.widgetData?.content?.name | pipeLimitTo: 100 }}
+                          </span>
+                        </div>
+                      </div>
+                      <span class="mat-body-1">
+                        <span>{{
+                          content?.widgetData?.content?.resourceType | pipeLimitTo: 100
+                        }}</span> </span><span class="mat-body-1 margin-left-xxs"
+                        *ngIf="content?.widgetData?.content?.reason"><span>|
+                          {{ content?.widgetData?.content?.reason | pipeLimitTo: 300 }}</span>
+                      </span>
+                    </span>
+                    <span>
+                      <div class="mat-body-1 content-duration mat-caption width-max-content">
+                        {{ content?.widgetData?.content?.duration | pipeDurationTransform: 'hms' }}
+                      </div>
+                    </span>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </div>
+    </div>
+    <div class="margin-top-m flex flex-wrapped">
+      <button mat-raised-button color="primary" (click)="saveReorder(orderMsg.value, failedMsg.value)" i18n>
+        Save
+      </button>
+      <button mat-raised-button color="primary" class="margin-left-s" (click)="revertReorder()" i18n>
+        Discard
+      </button>
+    </div>
+  </div>
+
+  <div class="flex px-6 sm:px-8 md:px-10 py-4 my-2">
+    <section class="flex-1 min-w-0">
+      <h2 class="mat-toolbar discussion-head shadow" i18n>Discussion Forum</h2>
+      <ng-container [wsResolverWidget]="discussionForumWidget"></ng-container>
+    </section>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="!content" [wsResolverWidget]="errorWidget"></ng-container>
+
+<ng-template #creators let-authors="authors">
+  <mat-card>
+    <h2 i18n>Curators</h2>
+    <mat-divider></mat-divider>
+    <div *ngFor="let author of authors" class="author">
+      <ws-widget-user-image class="author-image" [email]="author.email"></ws-widget-user-image>
+      <div class="width-expand flex flex-middle flex-between">
+        <h3 class="margin-remove">{{ author.name }}</h3>
+        <ws-widget-btn-mail-user [widgetData]="{ content: content, emails: [author.email] }"></ws-widget-btn-mail-user>
+      </div>
+    </div>
+  </mat-card>
+</ng-template>
+
+<input type="hidden" i18n-value value="Content added successfully. Your changes will reflect within a minute."
+  #addMsg />
+<input type="hidden" i18n-value value="Content deleted successfully. Your changes will reflect within a minute."
+  #deleteMsg />
+<input type="hidden" i18n-value value="Content updated successfully. Your changes will reflect within a minute."
+  #updateMsg />
+<input type="hidden" i18n-value value="Content order changed. Your changes will reflect within a minute." #orderMsg />
+<input type="hidden" i18n-value value="Failed to update." #failedMsg />

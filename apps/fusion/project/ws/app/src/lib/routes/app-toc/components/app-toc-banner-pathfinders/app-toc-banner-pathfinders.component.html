@@ -1,0 +1,25 @@
+<!--               "Copyright 2020 Infosys Ltd.
+               Use of this source code is governed by GPL v3 license that can be found in the LICENSE file or at https://opensource.org/licenses/GPL-3.0
+               This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3" -->
+<div [ngClass]="{
+    'banner-container': bannerUrl,
+    'ws-mat-primary-lite-background-on-day': !bannerUrl
+  }" [style.backgroundImage]="bannerUrl">
+  <div class="header-synopsis" *ngIf="content">
+    <div class="header-title margin-bottom-m flex flex-column">
+      <p class="mat-display-1 margin-remove-bottom content-name pb-4 text-truncate uppercase" [title]="content?.name">
+        {{ content?.name }}
+      </p>
+      <p class="text-xl font-medium">
+        {{ content?.complexityLevel }}
+        <ng-container *ngIf="content?.subTitle">
+          |
+        </ng-container>
+        <span class="" [matTooltip]="content?.subTitle"></span>
+        {{ content?.subTitle }}
+      </p>
+    </div>
+  </div>
+</div>
+<ws-widget-content-progress *ngIf="content?.identifier" [contentId]="content?.identifier">
+</ws-widget-content-progress>

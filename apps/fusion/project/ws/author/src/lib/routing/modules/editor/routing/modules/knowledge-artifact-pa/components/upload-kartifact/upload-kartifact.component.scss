@@ -1,0 +1,42 @@
+/*               "Copyright 2020 Infosys Ltd.
+               Use of this source code is governed by GPL v3 license that can be found in the LICENSE file or at https://opensource.org/licenses/GPL-3.0
+               This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3" */
+mat-progress-bar {
+  height: 6px;
+  top: 7px;
+}
+.custom-heading {
+  font-size: 36px !important;
+  color: #012d72;
+}
+
+.sub-heading {
+  font-size: 21px;
+  line-height: 28px;
+  color: #012d72;
+}
+
+.close-button {
+  top: 0px;
+  right: 20px;
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  border: none;
+  outline: none;
+  transform: translate3d(50%, -50%, 0);
+  cursor: pointer;
+  padding: 0;
+  color: white;
+
+  @media only screen and (max-width: 831px) {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+.primary-button {
+  background-color: #fc4c02 !important;
+  color: white !important;
+}

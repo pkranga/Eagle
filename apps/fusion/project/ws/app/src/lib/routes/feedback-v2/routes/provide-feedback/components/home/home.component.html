@@ -1,0 +1,31 @@
+<!--               "Copyright 2020 Infosys Ltd.
+               Use of this source code is governed by GPL v3 license that can be found in the LICENSE file or at https://opensource.org/licenses/GPL-3.0
+               This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3" -->
+<section class="container-balanced py-8 h-full mx-auto px-4">
+  <section class="flex flex-wrap justify-between mb-8">
+    <div class="p-4" tourAnchor="feedback_start">
+      <h2 class="mat-title w-full" i18n>We appreciate your feedback</h2>
+    </div>
+    <div class="p-4" tourAnchor="myFeedback">
+      <a mat-flat-button color="primary" [routerLink]="'./my-feedback'" [matBadge]="newItemsCount <= 99 ? newItemsCount : '99+'"
+        [matBadgeColor]="'accent'" [matBadgeHidden]="!newItemsCount" i18n>
+        My Feedback
+      </a>
+    </div>
+  </section>
+
+  <mat-tab-group mat-align-tabs="center" (selectedTabChange)="navigateToTab($event)" [(selectedIndex)]="currentTabIndex" *ngIf="rolesSet.size > 1">
+    <mat-tab label="Platform Feedback" *ngIf="showTab(feedbackTypes.Platform)" i18n-label></mat-tab>
+    <mat-tab label="Request Content" *ngIf="showTab(feedbackTypes.ContentRequest)" i18n-label></mat-tab>
+    <mat-tab label="Other Requests" *ngIf="showTab(feedbackTypes.ServiceRequest)" i18n-label></mat-tab>
+  </mat-tab-group>
+
+  <section class="py-8 h-full">
+    <router-outlet></router-outlet>
+  </section>
+</section>
+<input #feedbackstartTitle type="hidden" i18n-value value="Feedback" />
+<input #feedbackstartSubtitle type="hidden" i18n-value value="Feedback can be provided about content, feature and any issue that he/she faced"
+/>
+<input #myFeedbackTitle type="hidden" i18n-value value="All Feedbacks" />
+<input #myFeedbackSubtitle type="hidden" i18n-value value="User Can view all the feedbacks here" />

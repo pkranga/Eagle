@@ -1,0 +1,17 @@
+<!--               "Copyright 2020 Infosys Ltd.
+               Use of this source code is governed by GPL v3 license that can be found in the LICENSE file or at https://opensource.org/licenses/GPL-3.0
+               This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3" -->
+<ng-container *ngIf="data?.user && !isFetchingUserRoles && !isFetchingAllRoles; else loader">
+  <h3>{{data.user.first_name}} {{data.user.last_name}}</h3>
+  <p>{{data.user.email}}</p>
+  <mat-selection-list>
+    <mat-list-option *ngFor="let role of allRoles" (click)="modifyUserRoles(role)" [selected]="userRoles.has(role)">
+      {{role}}
+    </mat-list-option>
+  </mat-selection-list>
+  <button class="float-right" i18n mat-raised-button [color]="'primary'">
+    Save
+  </button>
+</ng-container>
+
+<ng-template #loader>Loading</ng-template>

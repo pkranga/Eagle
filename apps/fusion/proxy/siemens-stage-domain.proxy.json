@@ -1,0 +1,44 @@
+{
+  "/apis/*": {
+path
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/content-api/*": {
+path
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/content-store/*": {
+path
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/chat-bot/*": {
+path
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/mobile-apps/*": {
+path
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/LA/*": {
+path
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/assets/*": {
+path
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  }
+}

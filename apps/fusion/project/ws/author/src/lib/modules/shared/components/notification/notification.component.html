@@ -1,0 +1,148 @@
+<!--               "Copyright 2020 Infosys Ltd.
+               Use of this source code is governed by GPL v3 license that can be found in the LICENSE file or at https://opensource.org/licenses/GPL-3.0
+               This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3" -->
+<p *ngIf="canShow('success')">
+  <mat-icon class="icon" aria-hidden="false" i18n-aria-label aria-label="Success">thumb_up</mat-icon>
+  <span i18n>Your action is successful</span>
+</p>
+
+<p *ngIf="canShow('failure')">
+  <mat-icon class="icon" aria-hidden="false" i18n-aria-label aria-label="Fail">error</mat-icon>
+  <span i18n>Unable to complete action. Try again</span>
+</p>
+
+<p *ngIf="type === notify.CONTENT_CREATE_SUCCESS">
+  <mat-icon class="icon" aria-hidden="false" i18n-aria-label aria-label="Success">thumb_up</mat-icon>
+  <span i18n>New content created. Add details</span>
+</p>
+
+<p *ngIf="type === notify.INVALID_FORMAT">
+  <mat-icon class="icon" aria-hidden="false" i18n-aria-label aria-label="Fail">error</mat-icon>
+  <span i18n>Invalid format</span>
+</p>
+
+<p *ngIf="type === notify.DELETED">
+  <mat-icon class="icon" aria-hidden="false" i18n-aria-label aria-label="Fail">error</mat-icon>
+  <span i18n>Content was already deleted</span>
+</p>
+
+<p *ngIf="type === notify.PUBLISH_SUCCESS_LATE">
+  <mat-icon class="icon" aria-hidden="false" i18n-aria-label aria-label="Success">thumb_up</mat-icon>
+  <span i18n>Content published successfully. Will reflect in few mins</span>
+</p>
+
+<p *ngIf="type === notify.FORCE_SAVE">
+  <mat-icon class="icon" aria-hidden="false" i18n-aria-label aria-label="Fail">error</mat-icon>
+  <span i18n>Save and try again</span>
+</p>
+
+<p *ngIf="type === notify.SIZE_ERROR">
+  <mat-icon class="icon" aria-hidden="false" i18n-aria-label aria-label="Fail">error</mat-icon>
+  <span i18n>Size is greater than allowed, check info</span>
+</p>
+
+<p *ngIf="type === notify.DATA_PRESENT">
+  <mat-icon class="icon" aria-hidden="false" i18n-aria-label aria-label="Fail">error</mat-icon>
+  <span i18n>Data is already present</span>
+</p>
+
+<p *ngIf="type === notify.MANDATORY_FIELD_ERROR">
+  <mat-icon class="icon" aria-hidden="false" i18n-aria-label aria-label="Fail">error</mat-icon>
+  <span i18n>Fill all the mandatory fields</span>
+</p>
+
+<p *ngIf="type === notify.BODY_OR_URL">
+  <mat-icon class="icon" aria-hidden="false" i18n-aria-label aria-label="Fail">error</mat-icon>
+  <span i18n>Provide either URL or Body</span>
+</p>
+
+<p *ngIf="type === notify.UP_TO_DATE">
+  <mat-icon class="icon" aria-hidden="false" i18n-aria-label aria-label="Notification">notification_important</mat-icon>
+  <span i18n>Content is up-to date</span>
+</p>
+
+<p *ngIf="type === notify.IPR_DECLARATION">
+  <mat-icon class="icon" aria-hidden="false" i18n-aria-label aria-label="Notification">notification_important</mat-icon>
+  <span i18n>Read IPR Declaration and accept the terms!</span>
+</p>
+
+<p *ngIf="type === notify.IPR_DECLARATION_PF">
+  <mat-icon class="icon" aria-hidden="false" i18n-aria-label aria-label="Notification">notification_important</mat-icon>
+  <span i18n>Please accept the Resource Hub Terms & Conditions</span>
+</p>
+
+<p *ngIf="type === notify.UPLOAD_FILE">
+  <mat-icon class="icon" aria-hidden="false" i18n-aria-label aria-label="Notification">notification_important</mat-icon>
+  <span i18n>Upload the file!</span>
+</p>
+
+<p *ngIf="type === notify.TRANSCODE_FAIL">
+  <mat-icon class="icon" aria-hidden="false" i18n-aria-label aria-label="Notification">notification_important</mat-icon>
+  <span i18n>Transcoding of video failed. May Experience slowness!</span>
+</p>
+
+<p *ngIf="type === notify.CURATE_MANDATORY_MISS">
+  <mat-icon class="icon" aria-hidden="false" i18n-aria-label aria-label="Notification">notification_important</mat-icon>
+  <span i18n>Check Thumbnail, Name, Description, Subtitle, Duration is provided</span>
+</p>
+
+<p *ngIf="type === notify.KBOARD_MANDATORY_MISS">
+  <mat-icon class="icon" aria-hidden="false" i18n-aria-label aria-label="Notification">notification_important</mat-icon>
+  <span i18n>Check Thumbnail, Name, Description is provided</span>
+</p>
+
+<p *ngIf="type === notify.CREATE_MANDATORY_MISS">
+  <mat-icon class="icon" aria-hidden="false" i18n-aria-label aria-label="Notification">notification_important</mat-icon>
+  <span i18n>Check Thumbnail, Name, Description, Subtitle, Duration is provided</span>
+</p>
+
+<p *ngIf="type === notify.NO_ACCESS">
+  <mat-icon class="icon" aria-hidden="false" i18n-aria-label aria-label="Notification">notification_important</mat-icon>
+  <span i18n>You don't have access!</span>
+</p>
+
+<p *ngIf="type === notify.WINDOW_SIZE_ERROR">
+  <mat-icon class="icon" aria-hidden="false" i18n-aria-label aria-label="Notification">notification_important</mat-icon>
+  <span i18n>This screen is designed for 12" and above!</span>
+</p>
+
+<p *ngIf="type === notify.NOT_READY">
+  <mat-icon class="icon" aria-hidden="false" i18n-aria-label aria-label="Notification">notification_important</mat-icon>
+  <span i18n>Functionality is not enabled yet!</span>
+</p>
+<p *ngIf="type === notify.NO_CONTENT">
+  <mat-icon class="icon" aria-hidden="false" i18n-aria-label aria-label="Notification">notification_important</mat-icon>
+  <span i18n>There is no content!</span>
+</p>
+<p *ngIf="type === notify.LINK_UPLOAD">
+  <mat-icon class="icon" aria-hidden="false" i18n-aria-label aria-label="Notification">notification_important</mat-icon>
+  <span i18n>Enter the link!</span>
+</p>
+<p *ngIf="type === notify.COPY">
+  <mat-icon class="icon" aria-hidden="false" i18n-aria-label aria-label="Notification">notification_important</mat-icon>
+  <span i18n>Copied!</span>
+</p>
+<p *ngIf="type === notify.CREATE_CONTENT">
+  <mat-icon class="icon" aria-hidden="false" i18n-aria-label aria-label="Notification">error</mat-icon>
+  <span i18n>Create Content and save it and try again!</span>
+</p>
+<p *ngIf="type === notify.DUPLICTE">
+  <mat-icon class="icon" aria-hidden="false" i18n-aria-label aria-label="Notification">error</mat-icon>
+  <span i18n>Did not add “ID/s” as they are duplicate/s!</span>
+</p>
+<p *ngIf="type === notify.DELETE">
+  <mat-icon class="icon" aria-hidden="false" i18n-aria-label aria-label="Notification">error</mat-icon>
+  <span i18n>Delete data from "Paste Generated Code Tab"</span>
+</p>
+<p *ngIf="type === notify.RESOLUTION_MISMATCH">
+  <mat-icon class="icon" aria-hidden="false" i18n-aria-label aria-label="Notification">error</mat-icon>
+  <span i18n>Check number columns required for this widget</span>
+</p>
+<p *ngIf="type === notify.PROCESS_FAIL">
+  <mat-icon class="icon" aria-hidden="false" i18n-aria-label aria-label="Notification">error</mat-icon>
+  <span i18n>Unable to process file</span>
+</p>
+<p *ngIf="type === notify.MULTI_STRIP_VIOLATION">
+  <mat-icon class="icon" aria-hidden="false" i18n-aria-label aria-label="Notification">error</mat-icon>
+  <span i18n>Select automatic height to fix alignment issues</span>
+</p>

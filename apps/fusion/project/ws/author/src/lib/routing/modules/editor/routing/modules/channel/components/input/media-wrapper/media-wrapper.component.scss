@@ -1,0 +1,40 @@
+/*               "Copyright 2020 Infosys Ltd.
+               Use of this source code is governed by GPL v3 license that can be found in the LICENSE file or at https://opensource.org/licenses/GPL-3.0
+               This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3" */
+.hidden {
+  visibility: hidden;
+}
+
+.button {
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+.right {
+  float: right;
+}
+
+.required {
+  &::after {
+    color: red;
+    content: ' *';
+  }
+}
+
+.child {
+  width: 100%;
+}
+
+.column-wise {
+  display: flex;
+  flex-direction: column;
+}
+
+.row-wise {
+  display: flex;
+  flex-direction: row;
+}
+
+.radioButton {
+  padding-right: 5px;
+}

@@ -1,0 +1,47 @@
+/*               "Copyright 2020 Infosys Ltd.
+               Use of this source code is governed by GPL v3 license that can be found in the LICENSE file or at https://opensource.org/licenses/GPL-3.0
+               This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3" */
+@import 'ws-vars';
+@import 'ws-mixins';
+
+ws-app-nav-bar {
+  z-index: 1000;
+}
+.route-change {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 10000;
+}
+.height-on-bottom {
+  overflow: auto;
+  // padding-bottom: 56px;
+  box-sizing: border-box;
+}
+.height-on-top {
+  padding-top: 56px;
+}
+.top-nav-bar {
+  position: fixed;
+  width: 100%;
+  top: 0;
+}
+.bottom-nav-bar {
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+}
+.height-adjust {
+  min-height: calc(100vh - (56px + 52px));
+  @include breakpoint-xs {
+    min-height: calc(100vh - (56px + 72px));
+  }
+}
+.app-footer {
+  display: block;
+  padding-bottom: 56px;
+  @include breakpoint-gt-xs {
+    padding: 0;
+  }
+}
