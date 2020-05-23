@@ -123,6 +123,7 @@
       true,
       "allow-declarations"
     ],
+    "max-line-length": [false],    
     "no-reference": true,
     "no-return-await": true,
     "no-string-throw": true,
